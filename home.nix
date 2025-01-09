@@ -38,6 +38,9 @@
     enable = true;
     package = pkgs.rofi-wayland;
   };
+  programs.fastfetch = {
+    enable = true;
+  };
   i18n.inputMethod = {
     enabled = "fcitx5";
     fcitx5.addons = with pkgs; [fcitx5-unikey fcitx5-mozc fcitx5-gtk];
@@ -63,7 +66,7 @@
       vesktop
       slack
       # utils
-
+      fastfetch
       # nix related
       #
       # it provides the command `nom` works just like `nix`
@@ -71,6 +74,7 @@
 
       btop # replacement of htop/nmon
       hyprpanel
+      jetbrains.rust-rover
     ]
     ++ [inputs.zen-browser.packages."${system}".default];
 
@@ -82,10 +86,26 @@
   };
 
   # starship - an customizable prompt for any shell
-  xdg.configFile = {};
+  xdg.configFile = {
+    "rofi/config.rasi".enable = false;
+  };
   # alacritty - a cross-platform, GPU-accelerated terminal emulator
   programs.kitty = {
     enable = true;
+    themeFile = "tokyo_night_night";
+    settings = {
+      window_padding_width = 20;
+    };
+  };
+
+  programs.cava = {
+    enable = true;
+  };
+
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+    enableZshIntegration = true;
   };
 
   # This value determines the home Manager release that your

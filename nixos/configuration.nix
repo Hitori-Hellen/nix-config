@@ -59,6 +59,17 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
+  services.postgresql = {
+    enable = true;
+    ensureDatabases = [ "mydatabase" ];
+    authentication = pkgs.lib.mkOverride 10 ''
+      #type database  DBuser  auth-method
+      local all       all     trust
+      host  all       all     0.0.0.0/0 scram-sha-256
+      host  all       all     ::1/128 scram-sha-256
+    '';
+  };
+
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
@@ -108,7 +119,7 @@
 
     oh-my-zsh = {
       enable = true;
-      plugins = [ "git" ];
+      plugins = ["git"];
       theme = "robbyrussell";
     };
   };
@@ -133,6 +144,7 @@
     kitty
     swww
     zsh
+    beekeeper-studio
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
