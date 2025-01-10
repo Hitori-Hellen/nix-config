@@ -120,7 +120,7 @@
   users.users.linux = {
     isNormalUser = true;
     description = "linux";
-    extraGroups = ["networkmanager" "wheel"];
+    extraGroups = ["networkmanager" "wheel" "docker"];
     packages = with pkgs; [
       #  thunderbird
     ];
@@ -160,6 +160,10 @@
 
   # enable git
   programs.git = {
+    enable = true;
+  };
+
+  virtualisation.docker = {
     enable = true;
   };
 
