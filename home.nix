@@ -51,8 +51,6 @@
       nerd-fonts.fira-code
       nerd-fonts.jetbrains-mono
       gcc
-      # here is some command line tools I use frequently
-      # feel free to add your own or remove some of them
 
       nnn # terminal file manager
 
@@ -74,7 +72,12 @@
 
       btop # replacement of htop/nmon
       hyprpanel
+      brightnessctl
+      wev
+
+      # IDE
       jetbrains.rust-rover
+      jetbrains.webstorm
     ]
     ++ [inputs.zen-browser.packages."${system}".default];
 
@@ -92,7 +95,7 @@
   # alacritty - a cross-platform, GPU-accelerated terminal emulator
   programs.kitty = {
     enable = true;
-    themeFile = "tokyo_night_night";
+    themeFile = "Catppuccin-Frappe";
     settings = {
       window_padding_width = 20;
     };

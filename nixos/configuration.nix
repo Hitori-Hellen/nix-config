@@ -31,6 +31,10 @@
   };
   # tlp setting
   services.power-profiles-daemon.enable = false;
+  services.mysql = {
+    enable = true;
+    package = pkgs.mariadb;
+  };
   services.tlp = {
   enable = true;
   settings = {
@@ -150,6 +154,11 @@
       theme = "robbyrussell";
     };
   };
+
+  programs.steam = {
+    enable = true;
+  };
+
   users.defaultUserShell = pkgs.zsh;
 
   # Install firefox.
@@ -203,5 +212,6 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+  networking.firewall.checkReversePath = false;
   system.stateVersion = "24.11"; # Did you read the comment?
 }
