@@ -3,7 +3,10 @@
   config,
   pkgs,
   ...
-}: {
+}: let
+  inherit (config.lib.file) mkOutOfStoreSymlink;
+  homeDir = config.home.homeDirectory;
+in {
   # TODO please change the username & home directory to your own
   home.username = "linux";
   home.homeDirectory = "/home/linux";
@@ -22,6 +25,11 @@
   # home.file.".xxx".text = ''
   #     xxx
   # '';
+
+  # imports = [
+  #   inputs.ags.homeManagerModules.default
+  # ];
+
   nixpkgs.config = {allowUnfree = true;};
   # nixpkgs.overlays = [inputs.neovim-nightly-overlay.overlays.default];
   nixpkgs.overlays = [inputs.hyprpanel.overlay];
@@ -45,6 +53,18 @@
     enabled = "fcitx5";
     fcitx5.addons = with pkgs; [fcitx5-unikey fcitx5-mozc fcitx5-gtk];
   };
+  programs.eza = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+  # programs.ags = {
+  #   enable = true;
+  #   extraPackages = with pkgs; [
+  #     gtksourceview
+  #     webkitgtk
+  #     accountsservice
+  #   ];
+  # };
   # Packages that should be installed to the user profile.
   home.packages = with pkgs;
     [
@@ -59,6 +79,7 @@
       xz
       unzip
       p7zip
+      eza
 
       neovim
       vesktop
@@ -88,11 +109,25 @@
     userEmail = "leviettungduong@gmail.com";
   };
 
-  # starship - an customizable prompt for any shell
   xdg.configFile = {
+    kitty = {
+      source = mkOutOfStoreSymlink "${homeDir}/dotfiles/.config/kitty";
+      recursive = true;
+    };
+    "kitty/kitty.conf".enable = false;
+    hypr = {
+      source = mkOutOfStoreSymlink "${homeDir}/dotfiles/.config/hypr";
+      recursive = true;
+    };
+    "hypr/hyprland.conf".enable = false;
+    rofi = {
+      source = mkOutOfStoreSymlink "${homeDir}/dotfiles/.config/rofi";
+      recursive = true;
+    };
     "rofi/config.rasi".enable = false;
   };
-  # alacritty - a cross-platform, GPU-accelerated terminal emulator
+  
+  # kitty - a cross-platform, GPU-accelerated terminal emulator
   programs.kitty = {
     enable = true;
     themeFile = "Catppuccin-Frappe";
